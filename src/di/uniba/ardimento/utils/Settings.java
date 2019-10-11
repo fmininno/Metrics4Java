@@ -136,8 +136,10 @@ public class Settings {
      { 
 		 logger.info(getTime() + "CLEANING TEMP FOLDER");
 		 File dir = new File(Settings._JARPATH + "/temp/");
-		 for (final File fileEntry : dir.listFiles()) {
-			 Files.deleteIfExists(Paths.get(Settings._JARPATH + "/temp/" + fileEntry.getName())); 
+		 if(dir.list().length > 0) {
+			 for (final File fileEntry : dir.listFiles()) {
+				 Files.deleteIfExists(Paths.get(Settings._JARPATH + "/temp/" + fileEntry.getName())); 
+			 }
 		 }
      } 
      catch(NoSuchFileException e) 
