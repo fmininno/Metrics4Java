@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import javax.swing.JOptionPane;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -58,14 +61,15 @@ public class JasomeTool extends ToolAnalyzer {
     	        System.out.append("|");
 
     	    }
-    	   
+    	 	System.out.append("\n");
+
 	        process.waitFor();
 	       
 	        
 	    }catch(Exception e){
 	    	logger.error(Settings.getTime() + e.getMessage());
-	    	System.out.println("ERRORE NELLO SCRIPT JASOME :"+e);
-	    	JOptionPane.showMessageDialog(null,"Error in the Jasome script: try to select a smaller number of files","Error",JOptionPane.ERROR_MESSAGE);
+	    	System.out.println("ERRORE NELLO SCRIPT JASOME DI "+filename+ ":" + e);
+	    	JOptionPane.showMessageDialog(null,"Error in the Jasome script ("+filename+"): try to select a smaller number of files","Error",JOptionPane.ERROR_MESSAGE);
 	    	
 	    }
 		 
@@ -199,6 +203,7 @@ public class JasomeTool extends ToolAnalyzer {
 						 }
 					 }
 					JOptionPane.showMessageDialog(null,"Task completed","",JOptionPane.INFORMATION_MESSAGE);
+					if(XMLtoXLS._notProcessable > 0) System.out.println("INPUT FILES NOT PROCESSED BY JASOME:" + XMLtoXLS._notProcessable);
 					System.out.println("Done");
 				}
 		}
@@ -239,10 +244,20 @@ public class JasomeTool extends ToolAnalyzer {
 				
 				System.out.println("FOLDER: " + dir + " contains a non .java file! \nALL FILES MUST HAVE EXTENSION .JAVA !!!");
 				System.out.println("no .java FILENAME: " + fileEntry.getName());
+				//Delete file != .java
+				try {				
+					Files.deleteIfExists(Paths.get(fileEntry.getPath()));
+					System.out.println(Paths.get("the file has been deleted: "+ fileEntry.getPath()));
+				} catch (IOException e) {
+					logger.error(Settings.getTime() + e.getMessage());
+			    	System.out.println("ERRORE IN DELETE NOT FILE .JAVA:"+e);
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				error = true;
 			
-				return false;
+				//return false;
 			}
 	
 		 }

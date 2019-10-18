@@ -138,7 +138,16 @@ public class Settings {
 		 File dir = new File(Settings._JARPATH + "/temp/");
 		 if(dir.list().length > 0) {
 			 for (final File fileEntry : dir.listFiles()) {
-				 Files.deleteIfExists(Paths.get(Settings._JARPATH + "/temp/" + fileEntry.getName())); 
+				 String path = Settings._JARPATH + "/temp/" + fileEntry.getName();
+				 //if S.O. is Linux 
+				 System.out.println(System.getProperty("os.name"));
+				 if(System.getProperty("os.name").contains("Linux"))  Files.deleteIfExists(Paths.get(path)); 
+				 else 
+				 {
+					 path = path.replace("//", "");
+					 //System.out.println(path);
+					 Files.deleteIfExists(Paths.get(path)); 
+				 }
 			 }
 		 }
      } 

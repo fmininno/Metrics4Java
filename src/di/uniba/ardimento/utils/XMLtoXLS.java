@@ -29,6 +29,7 @@ public class XMLtoXLS {
 
 	private static Logger logger = LogManager.getLogger(mainMenu.class);
 	private static HSSFWorkbook workbook;
+	public static int _notProcessable = 0;
 	
 	public static void  convert(String filename){ 
 		logger.info(Settings.getTime() + "XML TO XLS CONVERSION");
@@ -107,7 +108,7 @@ public class XMLtoXLS {
 	                {
 			           	  
 		                	  _nameClass = takeSymbol(nextline3.trim(), "<Class name=");
-		                 	 // System.out.println("Class : " + _nameClass);
+		                 	 //System.out.println("Class : " + _nameClass);
 		                	  
 		                	  String tagMetricsClass = reader.readLine().trim();
 		                	  //System.out.println("Metrics of Class : "+ _nameClass);
@@ -211,9 +212,12 @@ public class XMLtoXLS {
 	        //Generate the XLS file
 	        generateXLS(dataDocument,filename);
 	    } catch (IOException e) {
-	    		logger.error(Settings.getTime() + e.getMessage());
-		        System.err.println("ERROR :" + e);
-		        JOptionPane.showMessageDialog(null,"Error in the Jasome script: try to select a smaller number of files","Error",JOptionPane.ERROR_MESSAGE);
+	    		//Count jasome not processable input files
+	    		_notProcessable++;
+	    		System.out.println("ERROR: JASOME CANNOT PROCESS INPUT");
+	    		//System.out.println("not processable update : " + _notProcessable);
+	    		logger.error(Settings.getTime() + "JASOME OUTPUT " + filename +".xml ERROR :" + e.getMessage());
+		        //JOptionPane.showMessageDialog(null,"Error in the parsing XML metrics result file to XLS","Error",JOptionPane.ERROR_MESSAGE);
 		    }
 	}
 	/**
@@ -420,7 +424,7 @@ public class XMLtoXLS {
 			}
 			
 			if(dataMenu.xmlFormatJasome==1) {
-				System.out.println("xml file generated in the folder : result/xml/");
+				//System.out.println("xml file generated in the folder : result/xml/");
 				//InputStream inp = new FileInputStream(Settings._JARPATH + "/jasome_tool/" + filename+".xml");
 				//Copia file xml prima di eliminarlo
 				
