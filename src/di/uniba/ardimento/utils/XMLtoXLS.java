@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -424,10 +425,15 @@ public class XMLtoXLS {
 			}
 			
 			if(dataMenu.xmlFormatJasome==1) {
-				//System.out.println("xml file generated in the folder : result/xml/");
-				//InputStream inp = new FileInputStream(Settings._JARPATH + "/jasome_tool/" + filename+".xml");
-				//Copia file xml prima di eliminarlo
-				
+				try {
+					String src = Settings._JARPATH + "/jasome_tool/" + filename+".xml";
+					String dst = Settings._JARPATH + "/result/xml/" + filename+".xml";
+					Files.copy(Paths.get(src), Paths.get(dst), StandardCopyOption.REPLACE_EXISTING);
+					//Copied
+					System.out.println("xml file auto-generated in the folder : result/xml/");
+				}catch(Exception e) {
+					System.out.println("ERROR : " + e);
+				}
 			}
 
 	        Files.deleteIfExists(Paths.get(Settings._JARPATH + "/jasome_tool/" + filename+".xml")); 

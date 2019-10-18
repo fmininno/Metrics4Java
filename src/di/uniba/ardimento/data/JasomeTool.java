@@ -69,7 +69,7 @@ public class JasomeTool extends ToolAnalyzer {
 	    }catch(Exception e){
 	    	logger.error(Settings.getTime() + e.getMessage());
 	    	System.out.println("ERRORE NELLO SCRIPT JASOME DI "+filename+ ":" + e);
-	    	JOptionPane.showMessageDialog(null,"Error in the Jasome script ("+filename+"): try to select a smaller number of files","Error",JOptionPane.ERROR_MESSAGE);
+	    	//JOptionPane.showMessageDialog(null,"Error in the Jasome script ("+filename+"): try to select a smaller number of files","Error",JOptionPane.ERROR_MESSAGE);
 	    	
 	    }
 		 
@@ -127,6 +127,7 @@ public class JasomeTool extends ToolAnalyzer {
 	@Override
 	public void calculateMetrics() {
 		// TODO Auto-generated method stub
+		XMLtoXLS._notProcessable = 0;
 		System.out.println("Start JaSoME Tool... ");
 		logger.info(Settings.getTime() + "START JASOME TOOL");
 		//I read the uploaded files
