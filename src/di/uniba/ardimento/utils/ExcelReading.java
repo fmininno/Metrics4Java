@@ -100,6 +100,8 @@ for( int index = 0; index < wb.getNumberOfSheets();index++) {
 
 		        }
 	}	 
+		out.close();
+	
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -171,6 +173,7 @@ for( int index = 0; index < wb.getNumberOfSheets();index++) {
 
    		        }
    	}	 
+    out2.close();
    			} catch (FileNotFoundException e) {
    				// TODO Auto-generated catch block
    				e.printStackTrace();
